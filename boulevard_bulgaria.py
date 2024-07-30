@@ -47,7 +47,7 @@ for entry in feed_dict.entries[::-1]:
         entry_image_bytes = io.BytesIO()
         entry_image.save(
             entry_image_bytes,
-            format="JPG",
+            format="WEBP",
             optimize=True,
         )
 
@@ -58,7 +58,7 @@ for entry in feed_dict.entries[::-1]:
         try:
             post_status = BSKY_CLIENT.send_image(
                 text=text_builder,
-                image=entry_image_bytes,
+                image=entry_image_bytes.getvalue(),
                 image_alt="",
                 langs=["bg"]
             )
