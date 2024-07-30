@@ -44,31 +44,25 @@ for entry in feed_dict.entries[::-1]:
             size=(640,360),
             resample=Image.NEAREST
         )
-        entry_image_quality = 90
-        post_status = None
+        entry_image_bytes = io.BytesIO()
+        entry_image.save(
+            entry_image_bytes,
+            "WEBP",
+            optimize=True,
+        )
 
         text_builder = atproto.client_utils.TextBuilder()
         text_builder.text(f"{entry_title}. ")
         text_builder.link("линк", entry_link)
 
-        while (post_status is None) and (entry_image_quality > 10):
-            entry_image_bytes = io.BytesIO()
-            entry_image.save(
-                entry_image_bytes,
-                "jpg",
-                optimize=True,
-                quality=entry_image_quality
+        try:
+            post_status = BSKY_CLIENT.send_image(
+                text=text_builder,
+                image=entry_image_bytes,
+                image_alt="",
+                langs=["bg"]
             )
-            try:
-                post_status = BSKY_CLIENT.send_image(
-                    text=text_builder,
-                    image=entry_image_bytes,
-                    image_alt="",
-                    langs=["bg"]
-                )
-            except atproto.exceptions.BadRequestError:
-                entry_image_quality -= 10
-        if post_status is None:
+        except atproto.exceptions.BadRequestError:
             BSKY_CLIENT.send_post(
                 text=text_builder,
                 langs=["bg"]
