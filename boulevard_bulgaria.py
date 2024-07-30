@@ -47,7 +47,7 @@ for entry in feed_dict.entries[::-1]:
         entry_image_bytes = io.BytesIO()
         entry_image.save(
             entry_image_bytes,
-            format="JPG"
+            format="JPEG"
         )
 
         text_builder = atproto.client_utils.TextBuilder()
