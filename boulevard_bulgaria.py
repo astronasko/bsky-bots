@@ -41,7 +41,7 @@ for entry in feed_dict.entries:
         if entry_image.size[0] > 1280:
             scale = 1280/entry_image.size[0]
             entry_image = entry_image.resize(
-                size=[int(x/scale) for x in entry_image.size],
+                size=[int(x*scale) for x in entry_image.size],
             )
 
         text_builder = atproto.client_utils.TextBuilder()
