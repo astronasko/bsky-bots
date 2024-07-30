@@ -47,7 +47,6 @@ for entry in feed_dict.entries[::-1]:
         entry_image_bytes = io.BytesIO()
         entry_image.save(
             entry_image_bytes,
-            format="JPG",
             optimize=True,
             quality=30
         )
@@ -57,7 +56,7 @@ for entry in feed_dict.entries[::-1]:
         text_builder.link("линк", entry_link)
 
         try:
-            post_status = BSKY_CLIENT.send_image(
+            BSKY_CLIENT.send_image(
                 text=text_builder,
                 image=entry_image_bytes.getvalue(),
                 image_alt="",
