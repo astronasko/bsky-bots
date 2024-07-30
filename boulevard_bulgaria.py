@@ -44,7 +44,7 @@ for entry in feed_dict.entries:
 
         while post_status is None:
             try:
-                entry_image = entry_image.thumbnail(
+                entry_image.thumbnail(
                     size=(1280,720),
                     reducing_gap=reducing_gap
                 )
