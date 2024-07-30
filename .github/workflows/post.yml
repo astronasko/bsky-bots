@@ -1,0 +1,22 @@
+name: "Main news workflow"
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/15 * * * *"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Install requirements
+        run: python3 -m pip install -r requirements.txt
+      - name: Grab news
+        run: python3 boulevard_bulgaria.py
+        env:
+          BB_PASS: ${{ secrets.BB_PASS }}
+      - name: Commit new changes
+        uses: EndBug/add-and-commit@v9
