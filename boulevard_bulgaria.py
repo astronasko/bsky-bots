@@ -25,7 +25,7 @@ feed_dict = feedparser.parse(
 )
 cache["etag"] = feed_dict.etag
 
-for entry in feed_dict.entries:
+for entry in feed_dict.entries[::-1]:
     if entry.id not in entry_ids:
         entry_link = entry.link
         entry_thumb = entry.media_content[0]["url"]
