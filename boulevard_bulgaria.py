@@ -37,6 +37,7 @@ for entry in feed_dict.entries:
         BSKY_CLIENT.send_image(
             text=text_builder,
             image=urllib.request.urlopen(entry_thumb).read(),
+            image_alt="",
             langs=["bg"]
         )
         cache["entry_ids"].append(entry.id)
