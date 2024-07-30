@@ -1,8 +1,9 @@
+from PIL import Image
 import atproto
 import feedparser
 import json
 import os
-import urllib.request
+import requests
 
 USER = "boulevardbulgaria.bsky.social"
 PASS = os.environ["BB_PASS"]
@@ -30,13 +31,25 @@ for entry in feed_dict.entries:
         while len(entry_title)>150:
             entry_title = " ".join(entry_title.split(" ")[:-1])
             entry_title += ".."
+        
+        entry_image = Image.open(
+            fp=requests.get(
+                url=entry_thumb,
+                stream=True
+            ).raw
+        )
+        if entry_image.size[0] > 1280:
+            scale = 1280/entry_image.size[0]
+            entry_image = entry_image.resize(
+                size=(int(x/scale) for x in entry_image.size),
+            )
 
         text_builder = atproto.client_utils.TextBuilder()
         text_builder.text(f"{entry_title}. ")
         text_builder.link("линк", entry_link)
         BSKY_CLIENT.send_image(
             text=text_builder,
-            image=urllib.request.urlopen(entry_thumb).read(),
+            image=entry_image.tobytes(),
             image_alt="",
             langs=["bg"]
         )
