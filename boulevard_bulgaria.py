@@ -39,29 +39,27 @@ for entry in feed_dict.entries:
                 stream=True
             ).raw
         )
-        reducing_gap = 2
-        post_status = None
+        entry_image.thumbnail(
+            size=(640,360),
+            resample=Image.NEAREST,
+            reducing_gap=2
+        )
 
-        while post_status is None:
-            try:
-                entry_image.thumbnail(
-                    size=(1280,720),
-                    resample=Image.NEAREST,
-                    reducing_gap=reducing_gap
-                )
-                text_builder = atproto.client_utils.TextBuilder()
-                text_builder.text(f"{entry_title}. ")
-                text_builder.link("линк", entry_link)
-                post_status = BSKY_CLIENT.send_image(
-                    text=text_builder,
-                    image=entry_image.tobytes(),
-                    image_alt="",
-                    langs=["bg"]
-                )
-            except atproto.exceptions.BadRequestError:
-                reducing_gap -= 0.1
-                if reducing_gap < 0.5:
-                    raise ValueError
+        text_builder = atproto.client_utils.TextBuilder()
+        text_builder.text(f"{entry_title}. ")
+        text_builder.link("линк", entry_link)
+        try:
+            BSKY_CLIENT.send_image(
+                text=text_builder,
+                image=entry_image.tobytes(),
+                image_alt="",
+                langs=["bg"]
+            )
+        except atproto.exceptions.BadRequestError:
+            BSKY_CLIENT.send_post(
+                text=text_builder,
+                langs=["bg"]
+            )
 
         cache["entry_ids"].append(entry.id)
 
