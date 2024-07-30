@@ -6,7 +6,8 @@ import urllib.request
 
 USER = "boulevardbulgaria.bsky.social"
 PASS = os.environ["BB_PASS"]
-BSKY_CLIENT = atproto.Client().login(USER, PASS)
+BSKY_CLIENT = atproto.Client()
+BSKY_CLIENT.login(USER, PASS)
 CACHE_FILENAME = "cache/boulevard_bulgaria.json"
 
 # Load cache
@@ -33,7 +34,7 @@ for entry in feed_dict.entries:
         text_builder = atproto.client_utils.TextBuilder()
         text_builder.text(f"{entry_title}. ")
         text_builder.link("линк", entry_link)
-        BSKY_CLIENT.send_post(
+        BSKY_CLIENT.send_image(
             text=text_builder,
             image=urllib.request.urlopen(entry_thumb).read(),
             langs=["bg"]
