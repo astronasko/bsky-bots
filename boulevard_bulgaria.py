@@ -1,5 +1,6 @@
 from PIL import Image
 import atproto
+import atproto.exceptions
 import feedparser
 import json
 import os
@@ -38,21 +39,29 @@ for entry in feed_dict.entries:
                 stream=True
             ).raw
         )
-        if entry_image.size[0] > 1280:
-            scale = 1280/entry_image.size[0]
-            entry_image = entry_image.resize(
-                size=[int(x*scale) for x in entry_image.size],
-            )
+        reducing_gap = 2
+        post_status = None
 
-        text_builder = atproto.client_utils.TextBuilder()
-        text_builder.text(f"{entry_title}. ")
-        text_builder.link("линк", entry_link)
-        BSKY_CLIENT.send_image(
-            text=text_builder,
-            image=entry_image.tobytes(),
-            image_alt="",
-            langs=["bg"]
-        )
+        while post_status is None:
+            try:
+                entry_image = entry_image.thumbnail(
+                    size=(1280,720),
+                    reducing_gap=reducing_gap
+                )
+                text_builder = atproto.client_utils.TextBuilder()
+                text_builder.text(f"{entry_title}. ")
+                text_builder.link("линк", entry_link)
+                post_status = BSKY_CLIENT.send_image(
+                    text=text_builder,
+                    image=entry_image.tobytes(),
+                    image_alt="",
+                    langs=["bg"]
+                )
+            except atproto.exceptions.BadRequestError:
+                reducing_gap += 1
+                if reducing_gap > 10:
+                    raise ValueError
+
         cache["entry_ids"].append(entry.id)
 
 cache_len = len(cache["entry_ids"])
