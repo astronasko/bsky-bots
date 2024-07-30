@@ -51,7 +51,7 @@ for entry in feed_dict.entries[::-1]:
         text_builder.text(f"{entry_title}. ")
         text_builder.link("линк", entry_link)
 
-        while (post_status is not None) and entry_image_quality > 10:
+        while (post_status is None) and (entry_image_quality > 10):
             entry_image_bytes = io.BytesIO()
             entry_image.save(
                 entry_image_bytes,
