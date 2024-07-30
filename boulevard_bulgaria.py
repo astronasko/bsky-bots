@@ -58,8 +58,8 @@ for entry in feed_dict.entries:
                     langs=["bg"]
                 )
             except atproto.exceptions.BadRequestError:
-                reducing_gap += 1
-                if reducing_gap > 10:
+                reducing_gap *= 2
+                if reducing_gap > 128:
                     raise ValueError
 
         cache["entry_ids"].append(entry.id)
