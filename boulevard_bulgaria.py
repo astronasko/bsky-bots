@@ -46,6 +46,7 @@ for entry in feed_dict.entries:
             try:
                 entry_image.thumbnail(
                     size=(1280,720),
+                    resample=Image.NEAREST,
                     reducing_gap=reducing_gap
                 )
                 text_builder = atproto.client_utils.TextBuilder()
@@ -58,8 +59,8 @@ for entry in feed_dict.entries:
                     langs=["bg"]
                 )
             except atproto.exceptions.BadRequestError:
-                reducing_gap *= 2
-                if reducing_gap > 128:
+                reducing_gap -= 0.1
+                if reducing_gap < 0.5:
                     raise ValueError
 
         cache["entry_ids"].append(entry.id)
