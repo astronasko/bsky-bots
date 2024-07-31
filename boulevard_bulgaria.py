@@ -39,7 +39,7 @@ for entry in feed_dict.entries[::-1]:
                 url=entry_thumb,
                 stream=True
             ).raw
-        )
+        ).convert("RGB")
         entry_image.thumbnail(
             size=(640,360),
         )
