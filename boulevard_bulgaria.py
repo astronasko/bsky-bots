@@ -68,7 +68,7 @@ for entry in feed_dict.entries[::-1]:
                     embed=embed_external,
                     langs=["bg"]
                 )
-            except atproto.exceptions:
+            except atproto.exceptions.BadRequestError:
                 entry_image_quality -= 10
             if entry_image_quality < 40:
                 # Fall back to a default thumbnail
