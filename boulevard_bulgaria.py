@@ -64,7 +64,7 @@ for entry in feed_dict.entries[::-1]:
                     )
                 )
                 post_response = BSKY_CLIENT.send_post(
-                    text="",
+                    text=f"{entry_title}.",
                     embed=embed_external,
                     langs=["bg"]
                 )
