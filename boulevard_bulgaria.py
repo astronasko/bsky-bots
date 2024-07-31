@@ -58,7 +58,7 @@ for entry in feed_dict.entries[::-1]:
                 embed_external = atproto.models.AppBskyEmbedExternal.Main(
                     external=atproto.models.AppBskyEmbedExternal.External(
                         title=entry_title,
-                        description="Булевард България - Новини, анализи и коментари",
+                        description="",
                         uri=entry_link,
                         thumb=BSKY_CLIENT.upload_blob(entry_image_bytes.getvalue()).blob
                     )
