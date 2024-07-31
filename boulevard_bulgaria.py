@@ -42,31 +42,41 @@ for entry in feed_dict.entries[::-1]:
         )
         entry_image.thumbnail(
             size=(640,360),
-            resample=Image.NEAREST
         )
-        entry_image_bytes = io.BytesIO()
-        entry_image.save(
-            entry_image_bytes,
-            "jpg"
-        )
+        entry_image_quality = 90
+        post_response = None
 
-        text_builder = atproto.client_utils.TextBuilder()
-        text_builder.text(f"{entry_title}. ")
-        text_builder.link("линк", entry_link)
-
-        try:
-            BSKY_CLIENT.send_image(
-                text=text_builder,
-                image=entry_image_bytes.getvalue(),
-                image_alt="",
-                langs=["bg"]
-            )
-        except atproto.exceptions.BadRequestError:
-            BSKY_CLIENT.send_post(
-                text=text_builder,
-                langs=["bg"]
-            )
-
+        while post_response is None:
+            try:
+                entry_image_bytes = io.BytesIO()
+                entry_image.save(
+                    entry_image_bytes,
+                    "JPEG",
+                    optimize=True,
+                    quality=90
+                )
+                embed_external = atproto.models.AppBskyEmbedExternal.Main(
+                    external=atproto.models.AppBskyEmbedExternal.External(
+                        title=entry_title,
+                        description="Булевард България - Новини, анализи и коментари",
+                        uri=entry_link,
+                        thumb=BSKY_CLIENT.upload_blob(entry_image_bytes.getvalue()).blob
+                    )
+                )
+                post_response = BSKY_CLIENT.send_post(
+                    text="",
+                    embed=embed_external,
+                    langs=["bg"]
+                )
+            except atproto.exceptions:
+                entry_image_quality -= 10
+            if entry_image_quality < 40:
+                # Fall back to a default thumbnail
+                entry_image = Image.open(
+                    fp="thumbnails/boulevard_bulgaria.jpg"
+                )
+                entry_image_quality = 90
+                
         cache["entry_ids"].append(entry.id)
 
 cache_len = len(cache["entry_ids"])
