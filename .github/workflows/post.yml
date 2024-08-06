@@ -2,7 +2,7 @@ name: "Main news workflow"
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/15 * * * *"
+    - cron: "*/59 * * * *"
 
 jobs:
   build:
