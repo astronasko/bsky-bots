@@ -20,7 +20,7 @@ with open(CACHE_FILENAME, "r") as file:
     entry_ids = cache["entry_ids"]
 
 feed_dict = feedparser.parse(
-    "https://boulevardbulgaria.bg/feed.atom",
+    "https://raw.githubusercontent.com/astronasko/bsky-bots/main/thumbnails/boulevard_bulgaria.jpg",
     etag=etag,
 )
 cache["etag"] = feed_dict.etag
