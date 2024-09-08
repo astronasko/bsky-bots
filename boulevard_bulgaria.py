@@ -28,7 +28,10 @@ cache["etag"] = feed_dict.etag
 for entry in feed_dict.entries[::-1]:
     if entry.id not in entry_ids:
         entry_link = entry.link
-        entry_thumb = entry.media_content[0]["url"]
+        try:
+            entry_thumb = entry.media_content[0]["url"]
+        except AttributeError:
+            entry_thumb = "thumbnails/boulevard_bulgaria.jpg"
         entry_title = entry.title
         while len(entry_title)>150:
             entry_title = " ".join(entry_title.split(" ")[:-1])
