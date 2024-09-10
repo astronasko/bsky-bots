@@ -20,7 +20,7 @@ with open(CACHE_FILENAME, "r") as file:
     entry_ids = cache["entry_ids"]
 
 feed_dict = feedparser.parse(
-    "https://raw.githubusercontent.com/astronasko/bsky-bots/main/thumbnails/boulevard_bulgaria.jpg",
+    "https://boulevardbulgaria.bg/feed.atom",
     etag=etag,
 )
 cache["etag"] = feed_dict.etag
@@ -31,7 +31,7 @@ for entry in feed_dict.entries[::-1]:
         try:
             entry_thumb = entry.media_content[0]["url"]
         except AttributeError:
-            entry_thumb = "thumbnails/boulevard_bulgaria.jpg"
+            entry_thumb = "https://raw.githubusercontent.com/astronasko/bsky-bots/main/thumbnails/boulevard_bulgaria.jpg"
         entry_title = entry.title
         while len(entry_title)>150:
             entry_title = " ".join(entry_title.split(" ")[:-1])
