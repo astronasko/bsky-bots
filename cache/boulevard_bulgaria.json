@@ -1,8 +1,6 @@
 {
-    "etag": "W/\"f8610a97d832849a0a89d5c73dae5de3\"",
+    "etag": "W/\"14ddb03631ff30dba75765f9abe500bf\"",
     "entry_ids": [
-        "tag:boulevardbulgaria.bg,2005:Article/32924",
-        "tag:boulevardbulgaria.bg,2005:Article/32926",
         "tag:boulevardbulgaria.bg,2005:Article/32925",
         "tag:boulevardbulgaria.bg,2005:Article/32923",
         "tag:boulevardbulgaria.bg,2005:Article/32921",
@@ -1000,6 +998,8 @@
         "tag:boulevardbulgaria.bg,2005:Article/34004",
         "tag:boulevardbulgaria.bg,2005:Article/34005",
         "tag:boulevardbulgaria.bg,2005:Article/34006",
-        "tag:boulevardbulgaria.bg,2005:Article/34007"
+        "tag:boulevardbulgaria.bg,2005:Article/34007",
+        "tag:boulevardbulgaria.bg,2005:Article/34008",
+        "tag:boulevardbulgaria.bg,2005:Article/34010"
     ]
 }
