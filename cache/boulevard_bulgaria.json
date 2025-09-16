@@ -1,11 +1,6 @@
 {
-    "etag": "W/\"2d335b102861f3969211fa27b91b942a\"",
+    "etag": "W/\"d72f522bf7c1cc11da797d9784fa8031\"",
     "entry_ids": [
-        "tag:boulevardbulgaria.bg,2005:Article/38437",
-        "tag:boulevardbulgaria.bg,2005:Article/38439",
-        "tag:boulevardbulgaria.bg,2005:Article/38440",
-        "tag:boulevardbulgaria.bg,2005:Article/38442",
-        "tag:boulevardbulgaria.bg,2005:Article/38443",
         "tag:boulevardbulgaria.bg,2005:Article/38444",
         "tag:boulevardbulgaria.bg,2005:Article/38430",
         "tag:boulevardbulgaria.bg,2005:Article/38448",
@@ -1000,6 +995,11 @@
         "tag:boulevardbulgaria.bg,2005:Article/39524",
         "tag:boulevardbulgaria.bg,2005:Article/39523",
         "tag:boulevardbulgaria.bg,2005:Article/39527",
-        "tag:boulevardbulgaria.bg,2005:Article/39528"
+        "tag:boulevardbulgaria.bg,2005:Article/39528",
+        "tag:boulevardbulgaria.bg,2005:Article/39529",
+        "tag:boulevardbulgaria.bg,2005:Article/39530",
+        "tag:boulevardbulgaria.bg,2005:Article/39511",
+        "tag:boulevardbulgaria.bg,2005:Article/39526",
+        "tag:boulevardbulgaria.bg,2005:Article/39504"
     ]
 }
