@@ -11,10 +11,19 @@ PASS = os.environ["VWCE_PASS"]
 BSKY_CLIENT = atproto.Client()
 BSKY_CLIENT.login(USER, PASS)
 
-df = yf.Ticker("VWCE.DE").history(period='5y')
-now = datetime.datetime.now(ZoneInfo("Europe/Berlin"))
+ticker_list = [
+    "VWCE.DE",
+    "IWDA.AS",
+    "VUAA.MI",
+    "CSPX.AS"
+]
+df = yf.download(ticker_list, period="5y")
+
+ticker_columns = [("Close", x) for x in ticker_list]
+df = df[ticker_columns]
+
+now = datetime.datetime.now()
 df["time_delta"] = (now - df.index).days
-df = df[["time_delta", "Close"]]
 
 time_delta_sel = np.array([0,30,365,5*365])
 index_sel = np.empty_like(time_delta_sel)
@@ -28,12 +37,16 @@ price_now = price_sel[0]
 diff = (price_sel[0] / price_sel[1:]) - 1
 diff *= 100
 
-date_string = now.strftime("%Y-%m-%d")
+post_string = ""
+
+for i, ticker in enumerate(ticker_columns):
+    post_string += (
+        f"{ticker[1].split(".")[0]} closed at €{price_now[i]:.2f}\n"
+        f"1M {diff[0,i]:+.1f}% | 1Y {diff[1,i]:+.1f}% | 5Y {diff[2,i]:+.1f}%\n"
+        f"Stay the course."
+    )
 
 post_response = BSKY_CLIENT.send_post(
-    text=(
-        f"VWCE {date_string} closed at €{price_now:.2f}\n"
-        f"1M {diff[0]:+.2f}% | 1Y {diff[1]:+.2f}% | 5Y {diff[2]:+.2f}%"
-    ),
+    text=post_string,
     langs=["en"]
 )
