@@ -17,7 +17,7 @@ jobs:
       - name: Grab news
         run: python3 vwce.py
         env:
-          BB_PASS: ${{ secrets.VWCE_PASS }}
+          VWCE_PASS: ${{ secrets.VWCE_PASS }}
       - name: Commit new changes
         uses: EndBug/add-and-commit@v9
         with:
