@@ -43,10 +43,9 @@ for i, ticker in enumerate(ticker_columns):
     post_string += (
         f"{ticker[1].split(".")[0]} closed at €{price_now[i]:.2f}\n"
         f"1M {diff[0,i]:+.1f}% | 1Y {diff[1,i]:+.1f}% | 5Y {diff[2,i]:+.1f}%\n"
-        f"Stay the course."
     )
 
 post_response = BSKY_CLIENT.send_post(
-    text=post_string,
+    text=post_string[:-2],
     langs=["en"]
 )
