@@ -1,0 +1,24 @@
+name: "Main ETF workflow"
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "15 16 * * 5"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Install requirements
+        run: python3 -m pip install -r requirements.txt
+      - name: Grab news
+        run: python3 vwce.py
+        env:
+          BB_PASS: ${{ secrets.VWCE_PASS }}
+      - name: Commit new changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          default_author: github_actions

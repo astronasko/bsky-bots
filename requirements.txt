@@ -1,4 +1,6 @@
 atproto
 feedparser
+numpy
 Pillow
 requests
+yfinance
