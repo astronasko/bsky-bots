@@ -17,7 +17,7 @@ ticker_list = [
     "VUAA.MI",
     "CSPX.AS"
 ]
-df = yf.download(ticker_list, period="5y")
+df = yf.download(ticker_list, period="1y")
 
 ticker_columns = [("Close", x) for x in ticker_list]
 df = df[ticker_columns]
@@ -25,7 +25,7 @@ df = df[ticker_columns]
 now = datetime.datetime.now()
 df["time_delta"] = (now - df.index).days
 
-time_delta_sel = np.array([0,30,365,5*365])
+time_delta_sel = np.array([0,30,365])
 index_sel = np.empty_like(time_delta_sel)
 
 for i, dt in enumerate(time_delta_sel):
@@ -41,8 +41,7 @@ post_string = ""
 
 for i, ticker in enumerate(ticker_columns):
     post_string += (
-        f"{ticker[1][:4]} closed at €{price_now[i]:.2f}\n"
-        f"1M {diff[0,i]:+.1f}% | 1Y {diff[1,i]:+.1f}% | 5Y {diff[2,i]:+.1f}%\n"
+        f"{ticker[1][:4]} @ €{price_now[i]:.2f} (1M {diff[0,i]:+.1f}% | 1Y {diff[1,i]:+.1f}%)\n"
     )
 
 post_response = BSKY_CLIENT.send_post(
