@@ -45,6 +45,6 @@ for i, ticker in enumerate(ticker_columns):
     )
 
 post_response = BSKY_CLIENT.send_post(
-    text=post_string[:-2],
+    text=post_string[:-1],
     langs=["en"]
 )
