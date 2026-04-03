@@ -6,7 +6,7 @@ import os
 import yfinance as yf
 from zoneinfo import ZoneInfo
 
-USER = "vwce.bsky.social"
+USER = "boglebot.bsky.social"
 PASS = os.environ["VWCE_PASS"]
 BSKY_CLIENT = atproto.Client()
 BSKY_CLIENT.login(USER, PASS)
