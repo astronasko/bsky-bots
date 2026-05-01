@@ -41,7 +41,7 @@ post_string = ""
 
 for i, ticker in enumerate(ticker_columns):
     post_string += (
-        f"{ticker[1][:4]} @ €{price_now[i]:.2f} (1M {diff[0,i]:+.1f}% | 1Y {diff[1,i]:+.1f}%)\n"
+        f"{ticker[1][:4]} €{price_now[i]:.2f} (1M {diff[0,i]:+.1f}% | 1Y {diff[1,i]:+.1f}%)\n"
     )
 
 post_response = BSKY_CLIENT.send_post(
